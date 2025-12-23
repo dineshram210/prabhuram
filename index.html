@@ -1,0 +1,861 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prabhu Ram • .NET Developer Portfolio</title>
+  <meta name="description" content="Portfolio of a .NET Developer (C#, ASP.NET Core, WinUI 3). Projects, skills, experience, and contact." />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Prabhu Ram • .NET Developer Portfolio" />
+  <meta property="og:description" content="C# • .NET • ASP.NET Core • WinUI 3 • Azure" />
+  <meta property="og:type" content="website" />
+
+  <!-- Minimal favicon (inline SVG) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='64' height='64'%3E%3Crect width='64' height='64' rx='14' fill='%23070A12'/%3E%3Cpath d='M14 33c8-16 12-16 18 0s10 16 18 0' fill='none' stroke='%2322D3EE' stroke-width='4' stroke-linecap='round'/%3E%3Ccircle cx='18' cy='22' r='4' fill='%237C5CFF'/%3E%3Ccircle cx='46' cy='22' r='4' fill='%2300D7A7'/%3E%3C/svg%3E" />
+
+  <style>
+    :root{
+      --bg0:#070A12;
+      --bg1:#0B1020;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --text:#EAF0FF;
+      --muted:#AAB6D3;
+      --line: rgba(255,255,255,.10);
+      --accent:#7C5CFF;     /* aurora purple */
+      --accent2:#22D3EE;    /* cyan */
+      --good:#00D7A7;       /* green */
+      --warn:#FFCC66;
+      --shadow: 0 20px 80px rgba(0,0,0,.55);
+      --radius: 18px;
+      --radius2: 12px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: var(--sans);
+      color:var(--text);
+      background:
+        radial-gradient(900px 520px at 18% 12%, rgba(124,92,255,.25), transparent 56%),
+        radial-gradient(900px 520px at 85% 0%, rgba(34,211,238,.18), transparent 58%),
+        radial-gradient(700px 700px at 58% 92%, rgba(0,215,167,.12), transparent 58%),
+        linear-gradient(180deg, var(--bg0), var(--bg1));
+    }
+    a{color:inherit; text-decoration:none}
+    a:hover{opacity:.92}
+    .container{max-width:1120px; margin:0 auto; padding:0 20px}
+    .skip{
+      position:absolute; left:-999px; top:auto; width:1px; height:1px; overflow:hidden;
+    }
+    .skip:focus{
+      left:20px; top:20px; width:auto; height:auto; padding:10px 12px;
+      background:var(--panel2); border:1px solid var(--line); border-radius:10px;
+    }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: rgba(7,10,18,.55);
+      border-bottom:1px solid var(--line);
+    }
+    .topbar-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0; gap:14px;
+    }
+    .brand{display:flex; align-items:center; gap:10px; font-weight:800; letter-spacing:.2px}
+    .brand-badge{
+      width:28px; height:28px; border-radius:10px;
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(34,211,238,.55));
+      box-shadow: 0 10px 35px rgba(124,92,255,.25);
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+    }
+    .brand-badge span{font-family:var(--mono); font-size:12px}
+    .nav{display:flex; gap:10px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .nav a{padding:8px 10px; border-radius:10px}
+    .nav a:hover{background: rgba(255,255,255,.06)}
+    .pill{
+      padding:8px 10px; border-radius:999px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-family: var(--mono);
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    /* Hero */
+    .hero{padding:64px 0 22px}
+    .hero-grid{display:grid; gap:18px; grid-template-columns: 1.25fr .75fr; align-items:stretch}
+    @media (max-width: 940px){ .hero-grid{grid-template-columns:1fr} }
+    .kicker{
+      display:inline-block;
+      padding:7px 10px;
+      border-radius:999px;
+      background: rgba(124,92,255,.12);
+      border: 1px solid rgba(124,92,255,.25);
+      font-family: var(--mono);
+      font-size: 12px;
+    }
+    h1{font-size:48px; line-height:1.05; margin:14px 0 10px}
+    @media (max-width: 520px){ h1{font-size:36px} }
+    .subhead{color:var(--muted); font-size:16px; line-height:1.65; margin:0 0 14px}
+
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin:10px 0 18px}
+    .chip{
+      padding:8px 10px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--line);
+      border-radius:999px;
+      font-size:13px;
+      color: var(--muted);
+    }
+
+    .cta-row{display:flex; gap:12px; align-items:center; margin:8px 0 12px; flex-wrap:wrap}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:10px 14px;
+      border-radius:12px;
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      font-weight:750;
+      cursor:pointer;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px)}
+    .btn-primary{
+      border-color: rgba(124,92,255,.55);
+      background: linear-gradient(135deg, rgba(124,92,255,.95), rgba(34,211,238,.55));
+    }
+    .btn-ghost{background: transparent}
+    .btn-warn{
+      border-color: rgba(255,204,102,.35);
+      background: rgba(255,204,102,.10);
+    }
+
+    .links{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .sep{color:rgba(255,255,255,.25)}
+    .muted{color:var(--muted)}
+    .small{font-size:12px}
+
+    /* Panels / Cards */
+    .section{padding:34px 0}
+    .section.tight{padding:24px 0}
+    .section-title{font-size:22px; margin:0 0 14px}
+    .section-row{display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin-bottom:14px; flex-wrap:wrap}
+
+    .grid-2{display:grid; gap:14px; grid-template-columns: repeat(2, 1fr)}
+    .grid-3{display:grid; gap:14px; grid-template-columns: repeat(3, 1fr)}
+    @media (max-width: 980px){ .grid-3{grid-template-columns: repeat(2, 1fr)} }
+    @media (max-width: 650px){ .grid-2, .grid-3{grid-template-columns: 1fr} }
+
+    .panel{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .panel-title{font-weight:850; margin-bottom:10px}
+    .panel p{margin:8px 0; color:var(--muted); line-height:1.7}
+
+    .tagwrap{display:flex; flex-wrap:wrap; gap:10px}
+    .tag{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding:6px 8px;
+      border-radius:999px;
+      background: rgba(34,211,238,.08);
+      border: 1px solid rgba(34,211,238,.18);
+      color: var(--muted);
+    }
+    .tag.good{
+      background: rgba(0,215,167,.08);
+      border-color: rgba(0,215,167,.18);
+    }
+    .tag.purple{
+      background: rgba(124,92,255,.10);
+      border-color: rgba(124,92,255,.22);
+    }
+
+    .card{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.04));
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow);
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+      min-height: 210px;
+    }
+    .kind{
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--good);
+      letter-spacing:.3px;
+    }
+    .card-title{margin:0; font-size:18px}
+    .card-sub{margin:4px 0 0; color:var(--muted)}
+    .card-desc{margin:0; color:var(--muted); line-height:1.55}
+    .card-actions{display:flex; gap:10px; margin-top:auto; flex-wrap:wrap}
+
+    /* Code card */
+    .codecard{
+      background: rgba(0,0,0,.35);
+      border: 1px solid rgba(124,92,255,.25);
+      border-radius: var(--radius);
+      /* box-shadow: var(--shadow); */
+      overflow:hidden;
+    }
+    .codecard-head{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:12px 14px;
+      border-bottom: 1px solid rgba(124,92,255,.18);
+      background: rgba(124,92,255,.06);
+    }
+    .dots{display:flex; gap:7px}
+    .dot{width:10px; height:10px; border-radius:999px; background: rgba(255,255,255,.18)}
+    .dot.red{background: rgba(255,99,99,.7)}
+    .dot.yellow{background: rgba(255,204,102,.7)}
+    .dot.green{background: rgba(0,215,167,.7)}
+    .codecard-head .title{font-family:var(--mono); font-size:12px; color:var(--muted)}
+    .codecard pre{
+      margin:0; padding:16px;
+      font-family: var(--mono);
+      font-size: 12.5px;
+      line-height: 1.65;
+      color: #DCE6FF;
+      white-space: pre-wrap;
+    }
+    .codecard-footer{
+      display:flex; gap:10px; flex-wrap:wrap;
+      padding:12px 14px;
+      border-top: 1px solid rgba(124,92,255,.18);
+      background: rgba(124,92,255,.06);
+    }
+    .badge{
+      font-family: var(--mono);
+      font-size: 12px;
+      padding:6px 8px;
+      border-radius:999px;
+      border: 1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: var(--muted);
+    }
+
+    /* Timeline */
+    .timeline{display:grid; gap:14px}
+    .t-item{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding:16px;
+    }
+    .t-head{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+    .t-title{font-weight:900}
+    .t-meta{color:var(--muted); font-family:var(--mono); font-size:12px}
+    .t-list{margin:12px 0 0; color:var(--muted); line-height:1.7}
+
+    /* Controls */
+    .controls{
+      display:flex; gap:12px; align-items:center; flex-wrap:wrap;
+      padding:12px; border-radius: var(--radius);
+      border:1px solid var(--line);
+      background: rgba(255,255,255,.03);
+    }
+    input[type="search"]{
+      flex:1;
+      min-width: 220px;
+      padding:10px 12px;
+      border-radius:12px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.25);
+      color: var(--text);
+      outline:none;
+    }
+    input[type="search"]:focus{border-color: rgba(34,211,238,.45)}
+
+    /* Contact */
+    .contact-grid{display:grid; grid-template-columns: 1fr 1fr; gap:14px}
+    @media (max-width: 900px){ .contact-grid{grid-template-columns:1fr} }
+    .contact-card{
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: var(--shadow);
+    }
+    .kv{display:grid; gap:8px}
+    .kv .row{display:flex; gap:10px; align-items:center; justify-content:space-between; flex-wrap:wrap}
+    .mono{font-family:var(--mono)}
+    .toast{
+      position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+      background: rgba(0,0,0,.55);
+      border: 1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(10px);
+      color: var(--text);
+      padding:10px 12px;
+      border-radius:12px;
+      display:none;
+      max-width: calc(100% - 24px);
+      box-shadow: var(--shadow);
+      font-family: var(--mono);
+      font-size: 12px;
+      z-index: 1000;
+    }
+
+    /* Footer */
+    .footer{
+      margin-top: 30px;
+      border-top: 1px solid var(--line);
+      background: rgba(7,10,18,.45);
+      backdrop-filter: blur(12px);
+    }
+    .footer-inner{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      padding: 18px 0;
+      color: var(--muted);
+    }
+
+    /* Image */
+    .profile-photo-wrap{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      margin: 12px 0 6px;
+      flex-wrap:wrap;
+    }
+    .profile-photo{
+      width: 110px;
+      height: 110px;
+      border-radius: 18px;
+      object-fit: cover;
+      border: 1px solid rgba(255,255,255,.14);
+      box-shadow: 0 18px 60px rgba(0,0,0,.45);
+      background: rgba(255,255,255,.03);
+      max-width: 100%;
+    }
+
+    /* Mobile responsiveness improvements */
+    @media (max-width: 760px){
+      .topbar-inner{flex-direction:column; align-items:flex-start}
+      .nav{width:100%; justify-content:flex-start}
+      .nav a{padding:8px 8px}
+    }
+    @media (max-width: 520px){
+      .container{padding:0 16px}
+      .hero{padding:44px 0 18px}
+      .section{padding:26px 0}
+      .codecard pre{font-size:12px}
+      .profile-photo{width: 92px; height: 92px; border-radius: 16px}
+      input[type="search"]{min-width: 160px}
+    }
+
+    .codecard-image{
+        width: 100%;
+        height: 70%;
+        min-height: 260px;
+    }
+
+    .codecard-image img{
+        width: 100%;
+        height: 100%;
+        object-fit: cover; /* full area fill */
+        display: block;
+    }
+
+  </style>
+
+  <!-- Optional: structured data -->
+  <!-- <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Prabhu Ram",
+    "jobTitle": ".NET Developer",
+    "url": "https://your-domain.com",
+    "sameAs": [
+      "https://github.com/yourhandle",
+      "https://linkedin.com/in/yourhandle"
+    ]
+  }
+  </script> -->
+</head>
+
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="topbar">
+    <div class="container topbar-inner">
+      <a class="brand" href="#home" aria-label="Go to top">
+        <div class="brand-badge" aria-hidden="true"><span>P</span></div>
+        <div>
+          <div style="line-height:1.1">Prabhu Ram</div>
+          <div class="pill" style="margin-top:4px; display:inline-block;">C# • ASP.NET Core • WinUI 3</div>
+        </div>
+      </a>
+
+      <nav class="nav" aria-label="Primary navigation">
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact" class="btn btn-ghost">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HERO -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="kicker">DotNet Aurora Theme • “IDE + WinUI Glass”</div>
+          <h1>Prabhu Ram  .NET Developer</h1>
+          <p class="subhead">
+            I build <span class="mono">C#</span> solutions — modern <span class="mono">ASP.NET Core</span> APIs,
+            clean architecture services, and polished <span class="mono">WinUI 3</span> desktop apps.
+          </p>
+
+          <div class="chips">
+            <span class="chip">C# • .NET</span>
+            <span class="chip">ASP.NET Core • Minimal APIs</span>
+            <span class="chip">EF Core • SQL Server</span>
+            <span class="chip">WinUI 3 • MVVM • XAML</span>
+            <span class="chip">Azure • CI/CD</span>
+          </div>
+
+          <div class="cta-row">
+            <a class="btn btn-primary" href="#projects">View Projects</a>
+            <a class="btn btn-ghost" href="#contact">Hire / Collaborate</a>
+            <!-- Put your resume file in same folder as index.html and rename to resume.pdf -->
+            <a class="btn btn-warn" href="resume.pdf" download>Download Resume</a>
+          </div>
+
+          <!-- <div class="profile-photo-wrap">
+            <img class="profile-photo" src="img1.jpeg" alt="Prabhu Ram" />
+          </div> -->
+
+          <div class="links">
+            <a href="https://github.com/yourhandle" target="_blank" rel="noreferrer">GitHub</a>
+            <span class="sep">•</span>
+            <a href="https://linkedin.com/in/yourhandle" target="_blank" rel="noreferrer">LinkedIn</a>
+            <span class="sep">•</span>
+            <a href="mailto:skynet.prabhuram@gmail.com">skynet.prabhuram@gmail.com</a>
+            <span class="sep">•</span>
+            <a href="https://wa.me/919655975001" target="_blank" rel="noreferrer">WhatsApp</a>
+            <span class="sep">•</span>
+            <span class="muted">Pallipalayam</span>
+          </div>
+        </div>
+
+        <aside class="codecard" aria-label="C# showcase snippet">
+          <div class="codecard-head">
+            <div class="dots" aria-hidden="true">
+              <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+            </div>
+            <div class="title">Img</div>
+        </div>
+        <div class="codecard-image">
+            <img src="img1.jpeg" alt="Prabhu Ram" />
+        </div>
+
+          <div class="codecard-footer">
+            <span class="badge">Visual Studio 2026</span>
+            <span class="badge">Clean Architecture</span>
+            <span class="badge">WinUI 3</span>
+            <span class="badge">Azure-ready</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- SKILLS -->
+    <section id="skills" class="section">
+      <div class="container">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="grid-2">
+          <div class="panel">
+            <div class="panel-title">Core .NET</div>
+            <div class="tagwrap">
+              <span class="tag purple">C#</span>
+              <span class="tag purple">.NET</span>
+              <span class="tag">LINQ</span>
+              <span class="tag">Async/Await</span>
+              <span class="tag">SOLID</span>
+              <span class="tag">Design Patterns</span>
+              <span class="tag">DI</span>
+            </div>
+            <p>Strong focus on readability, maintainability, and performance.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Web</div>
+            <div class="tagwrap">
+              <span class="tag">ASP.NET Core</span>
+              <span class="tag">Minimal APIs</span>
+              <span class="tag">REST</span>
+              <span class="tag">Swagger/OpenAPI</span>
+              <span class="tag">Auth (JWT/OAuth)</span>
+              <span class="tag">Caching</span>
+            </div>
+            <p>API-first development with clean boundaries and production concerns.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Desktop</div>
+            <div class="tagwrap">
+              <span class="tag good">WinUI 3</span>
+              <span class="tag good">MVVM</span>
+              <span class="tag good">XAML</span>
+              <span class="tag">MSIX</span>
+              <span class="tag">Reusable Components</span>
+            </div>
+            <p>Polished UI, modern Windows UX, and maintainable viewmodels.</p>
+          </div>
+
+          <div class="panel">
+            <div class="panel-title">Data & Cloud</div>
+            <div class="tagwrap">
+              <span class="tag">EF Core</span>
+              <span class="tag">SQL Server</span>
+              <span class="tag">Migration Strategy</span>
+              <span class="tag">Azure App Service</span>
+              <span class="tag">Storage</span>
+              <span class="tag">CI/CD</span>
+            </div>
+            <p>Built for deployment: logging, health checks, and stable releases.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROJECTS -->
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-row">
+          <h2 class="section-title">Projects</h2>
+
+        
+        </div>
+
+        <div class="grid-3" id="projectGrid">
+          <!-- Edit these cards: title, text, links -->
+          <article class="card" data-tags="winui3 mvvm xaml desktop c# dotnet">
+            <div>
+              <div class="kind">Desktop • WinUI 3</div>
+              <h3 class="card-title">WinUI 3 Productivity Dashboard</h3>
+              <p class="card-sub">Fast dashboard with MVVM, theming, and offline-first sync.</p>
+            </div>
+            <p class="card-desc">
+              Clean layers (UI/Domain/Data), responsive XAML, and performance-friendly state updates.
+            </p>
+            <div class="tagwrap">
+              <span class="tag good">WinUI 3</span><span class="tag good">MVVM</span><span class="tag">SQLite</span><span class="tag">MSIX</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="https://github.com/yourhandle/winui-dashboard" target="_blank" rel="noreferrer">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;" title="Add live/demo link">Demo</a> -->
+            </div>
+          </article>
+
+          <article class="card" data-tags="aspnetcore clean-architecture cqrs api efcore c# dotnet">
+            <div>
+              <div class="kind">Web • API</div>
+              <h3 class="card-title">Clean Architecture API Starter</h3>
+              <p class="card-sub">Production-ready ASP.NET Core template for scalable services.</p>
+            </div>
+            <p class="card-desc">
+              Layered solution, validation, logging, health checks, and testing scaffolding.
+            </p>
+            <div class="tagwrap">
+              <span class="tag">ASP.NET Core</span><span class="tag">EF Core</span><span class="tag">CQRS</span><span class="tag">Serilog</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="https://github.com/yourhandle/clean-arch-starter" target="_blank" rel="noreferrer">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Live</a>
+            </div> -->
+          </article>
+
+          <article class="card" data-tags="minimal-api jwt swagger auth aspnetcore c# dotnet">
+            <div>
+              <div class="kind">Web • Minimal APIs</div>
+              <h3 class="card-title">Minimal API + JWT + Swagger</h3>
+              <p class="card-sub">Secure minimal APIs with versioning and great docs.</p>
+            </div>
+            <p class="card-desc">
+              Endpoint grouping, consistent responses, auth flows, and OpenAPI docs that stay clean.
+            </p>
+            <div class="tagwrap">
+              <span class="tag">Minimal APIs</span><span class="tag">JWT</span><span class="tag">Swagger</span><span class="tag">Auth</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="https://github.com/yourhandle/minimal-api-auth" target="_blank" rel="noreferrer">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Live</a> -->
+            </div>
+          </article>
+
+          <article class="card" data-tags="efcore sqlserver performance benchmarkdotnet c# dotnet">
+            <div>
+              <div class="kind">Library • Data</div>
+              <h3 class="card-title">EF Core Performance Cookbook</h3>
+              <p class="card-sub">Real fixes for slow queries and N+1 issues.</p>
+            </div>
+            <p class="card-desc">
+              Projections, compiled queries, indexes, tracking strategy, and benchmark notes.
+            </p>
+            <div class="tagwrap">
+              <span class="tag">EF Core</span><span class="tag">SQL Server</span><span class="tag">BenchmarkDotNet</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="https://github.com/yourhandle/efcore-performance" target="_blank" rel="noreferrer">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Notes</a> -->
+            </div>
+          </article>
+
+          <article class="card" data-tags="azure cicd devops github-actions aspnetcore dotnet">
+            <div>
+              <div class="kind">Cloud • Deployment</div>
+              <h3 class="card-title">Azure Deploy Pipeline</h3>
+              <p class="card-sub">CI/CD pipeline for building, testing, and deploying .NET apps.</p>
+            </div>
+            <p class="card-desc">
+              GitHub Actions (or Azure DevOps), environment secrets, and safe releases.
+            </p>
+            <div class="tagwrap">
+              <span class="tag">Azure</span><span class="tag">CI/CD</span><span class="tag">GitHub Actions</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="#" onclick="return false;">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Guide</a> -->
+            </div>
+          </article>
+
+          <article class="card" data-tags="winui3 components xaml controls c# dotnet">
+            <div>
+              <div class="kind">Desktop • Components</div>
+              <h3 class="card-title">WinUI 3 UI Components Pack</h3>
+              <p class="card-sub">Reusable controls: dialogs, toasts, navigation, theming.</p>
+            </div>
+            <p class="card-desc">
+              Focus on consistent UX and reusable styles for faster WinUI development.
+            </p>
+            <div class="tagwrap">
+              <span class="tag good">WinUI 3</span><span class="tag good">XAML</span><span class="tag">Reusable UI</span>
+            </div>
+            <div class="card-actions">
+              <!-- <a class="btn btn-ghost" href="#" onclick="return false;">Code</a>
+              <a class="btn btn-primary" href="#" onclick="return false;">Docs</a> -->
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <div class="container">
+        <h2 class="section-title">Experience</h2>
+
+        <div class="timeline">
+          <div class="t-item">
+            <div class="t-head">
+              <div class="t-title">.NET Developer</div>
+              <div class="t-meta">SkynetBee AI Pvt. Ltd.. • 2024 — Present</div>
+            </div>
+            <ul class="t-list">
+              <li>Built ASP.NET Core APIs with clean architecture and reliable release practices.</li>
+              <li>Improved performance using EF Core optimizations, caching, and async pipelines.</li>
+              <li>Delivered WinUI 3 features using MVVM and reusable UI components.</li>
+            </ul>
+          </div>
+
+          <div class="t-item">
+            <div class="t-head">
+              <div class="t-title">Freelance / Personal Projects</div>
+              <div class="t-meta">Self • Ongoing</div>
+            </div>
+            <ul class="t-list">
+              <li>Created templates, starter kits, and utilities for faster .NET development.</li>
+              <li>Experimented with desktop + web shared domain layers and testable architecture.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-row">
+          <h2 class="section-title">Contact</h2>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="panel-title">Quick contact</div>
+
+            <div class="kv">
+              <div class="row">
+                <div>
+                  <div class="muted small">WhatsApp</div>
+                  <div class="mono" id="emailText">+91 9655975001</div>
+                </div>
+                    <a class="btn btn-ghost" href="https://wa.me/919655975001" target="_blank" rel="noreferrer">Open</a>
+                </div>
+
+              <div class="row">
+                <div>
+                  <div class="muted small">GitHub</div>
+                  <div class="mono">github.com/yourhandle</div>
+                </div>
+                <a class="btn btn-ghost" href="https://github.com/yourhandle" target="_blank" rel="noreferrer">Open</a>
+              </div>
+
+              <div class="row">
+                <div>
+                  <div class="muted small">LinkedIn</div>
+                  <div class="mono">linkedin.com/in/yourhandle</div>
+                </div>
+                <a class="btn btn-ghost" href="https://linkedin.com/in/yourhandle" target="_blank" rel="noreferrer">Open</a>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="contact-card">
+            <div class="panel-title">Message</div>
+            <p class="muted" style="margin-top:0">
+              For static hosting, easiest is <span class="mono">mailto</span>. If you want real form submit later,
+              connect Formspree / Netlify Forms.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="mailto:skynet.prabhuram@gmail.com?subject=Portfolio%20Contact&body=Hi%20Prabhu%20Ram,%0D%0A%0D%0A">
+                Email Me
+              </a>
+              </div>
+
+            <div class="panel" style="margin-top:12px">
+              <div class="panel-title">What I can build</div>
+              <div class="tagwrap">
+                <span class="tag">APIs</span>
+                <span class="tag">Admin Dashboards</span>
+                <span class="tag">WinUI 3 Desktop Apps</span>
+                <span class="tag">EF Core Data Layers</span>
+                <span class="tag">Deployment (Azure)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© <span id="year"></span> • Prabhu Ram All rights reserved.</div>
+      </div>
+  </footer>
+
+  <!-- <div class="toast" id="toast" role="status" aria-live="polite"></div> -->
+
+  <script>
+    // Smooth scroll for same-page anchors
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener("click", (e) => {
+        const href = a.getAttribute("href");
+        if (!href || href.length < 2) return;
+        const el = document.querySelector(href);
+        if (!el) return;
+        e.preventDefault();
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.pushState({}, "", href);
+      });
+    });
+
+    // Footer year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // Toast helper
+    const toastEl = document.getElementById("toast");
+    let toastTimer = null;
+    function toast(msg){
+      toastEl.textContent = msg;
+      toastEl.style.display = "block";
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => { toastEl.style.display = "none"; }, 1800);
+    }
+
+    // Copy email
+    document.getElementById("copyEmailBtn").addEventListener("click", async () => {
+      const email = document.getElementById("emailText").textContent.trim();
+      try{
+        await navigator.clipboard.writeText(email);
+        toast("Email copied: " + email);
+      }catch{
+        // fallback
+        const ta = document.createElement("textarea");
+        ta.value = email;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+        toast("Email copied: " + email);
+      }
+    });
+
+    // Copy message template
+    document.getElementById("openTemplateBtn").addEventListener("click", async () => {
+      const template =
+`Hi Prabhu Ram,
+
+I saw your .NET portfolio. I want to discuss:
+- Project type:
+- Tech stack:
+- Timeline:
+- Budget:
+
+Thanks,
+(Your Name)`;
+      try{
+        await navigator.clipboard.writeText(template);
+        toast("Template copied");
+      }catch{
+        toast("Copy not available in this browser");
+      }
+    });
+
+    // Project search filter
+    const search = document.getElementById("projectSearch");
+    const cards = Array.from(document.querySelectorAll("#projectGrid .card"));
+    const count = document.getElementById("projectCount");
+
+    function updateCount(visible){
+      const n = visible.length;
+      count.textContent = n + (n === 1 ? " project" : " projects");
+    }
+
+    function filterProjects(){
+      const q = (search.value || "").toLowerCase().trim();
+      const visible = [];
+      for (const c of cards){
+        const text = (c.textContent + " " + (c.getAttribute("data-tags") || "")).toLowerCase();
+        const ok = q === "" || text.includes(q);
+        c.style.display = ok ? "" : "none";
+        if (ok) visible.push(c);
+      }
+      updateCount(visible);
+    }
+
+    search.addEventListener("input", filterProjects);
+    filterProjects();
+  </script>
+</body>
+</html>
